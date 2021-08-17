@@ -19,7 +19,9 @@ public class Seller extends Thread {
     public void run() {
         try {
             System.out.println("Seller: Selling car");
+            int count = 0;
             while (true) {
+                if (isInterrupted()) return;
                 if (!dealer.hasCar()) {
                     System.out.println("Seller: Can't sell car - have no car");
                     synchronized (dealer) {
@@ -35,10 +37,9 @@ public class Seller extends Thread {
                     }
                 }
             }
-
         } catch (
                 InterruptedException e) {
-            e.printStackTrace();
+            System.out.println("Seller thread was winished");
         }
     }
 }

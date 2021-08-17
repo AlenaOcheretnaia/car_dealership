@@ -17,6 +17,18 @@ public class Main {
         buyer2.start();
         buyer3.start();
 
+        try {
+            manufacture.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (!manufacture.isAlive()) {
+            seller.interrupt();
+            buyer1.interrupt();
+            buyer2.interrupt();
+            buyer3.interrupt();
+        }
 
     }
 }

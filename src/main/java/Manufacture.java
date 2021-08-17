@@ -9,13 +9,14 @@ public class Manufacture extends Thread {
 
     @Override
     public void run() {
-        while (true) {
+        int count = 0;
+        while (count < 10) {
             if (isInterrupted()) return;
             try {
                 System.out.println(Thread.currentThread().getName() + " произвёл новую машину");
                 Car newCar = new Car();
                 dealer.receiveCar(newCar);
-                //notifyAll();
+                count++;
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
