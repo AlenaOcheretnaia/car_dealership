@@ -9,18 +9,18 @@ public class Manufacture extends Thread {
 
     @Override
     public void run() {
-        int count = 0;
-        while (count < 10) {
-            if (isInterrupted()) return;
+        while (!Thread.interrupted()) {
             try {
-                System.out.println(Thread.currentThread().getName() + " произвёл новую машину");
+                System.out.println("Manufacture произвёл новую машину");
                 Car newCar = new Car();
                 dealer.receiveCar(newCar);
-                count++;
-                Thread.sleep(2000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println("Manufacture thread was finished");
+                break;
             }
         }
     }
+
+
 }

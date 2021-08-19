@@ -14,23 +14,24 @@ public class Buyer extends Thread {
 
     @Override
     public void run() {
-        System.out.println(this.name + ": want to buy car!");
-            try {
-                while (true) {
-                    if (!seller.hasCar()) {
-                        System.out.println(this.name + ": waiting car");
-                        synchronized (seller) {
-                            seller.wait();
-                        }
-                    } else {
-                        Car c = seller.getCar();
-                        System.out.println(this.name + ": got car " + c.toString());
-                        doIhaveCar = true;
+        System.out.println(this.name + ": want to buy a car!");
+        try {
+            while (!isInterrupted()) {
+                if (!seller.hasCar()) {
+                    System.out.println(this.name + ": waiting car");
+                    synchronized (seller) {
+                        seller.wait();
                     }
+                } else {
+                    Car c = seller.getCar();
+                    System.out.println(this.name + ": got car " + c.toString());
+                    doIhaveCar = true;
+                    Thread.sleep(3000);
                 }
-            } catch (InterruptedException e) {
-                System.out.println("Buyer thread was finished");
             }
+        } catch (InterruptedException e) {
+            System.out.println("Buyer thread was finished");
+        }
     }
 }
 

@@ -1,3 +1,5 @@
+import java.util.TreeMap;
+
 public class Seller extends Thread {
 
     private Dealer dealer;
@@ -17,10 +19,10 @@ public class Seller extends Thread {
 
     @Override
     public void run() {
+        int count = 0;
         try {
             System.out.println("Seller: Selling car");
-            int count = 0;
-            while (true) {
+            while (count < 10) {
                 if (isInterrupted()) return;
                 if (!dealer.hasCar()) {
                     System.out.println("Seller: Can't sell car - have no car");
@@ -28,7 +30,9 @@ public class Seller extends Thread {
                         dealer.wait();
                     }
                 } else {
+                    Thread.sleep(2000);
                     System.out.println("Seller: I have a car");
+                    count++;
                     synchronized (this) {
                         this.notifyAll();
                     }
@@ -37,9 +41,8 @@ public class Seller extends Thread {
                     }
                 }
             }
-        } catch (
-                InterruptedException e) {
-            System.out.println("Seller thread was winished");
+        } catch (InterruptedException e) {
+            System.out.println("Seller thread was finished");
         }
     }
 }

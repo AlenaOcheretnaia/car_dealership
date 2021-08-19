@@ -7,9 +7,9 @@ public class Main {
 
         Manufacture manufacture = new Manufacture(dealer);
 
-        Buyer buyer1 = new Buyer(seller, "buyer1");
-        Buyer buyer2 = new Buyer(seller, "buyer2");
-        Buyer buyer3 = new Buyer(seller, "buyer3");
+        Buyer buyer1 = new Buyer(seller, "Buyer1");
+        Buyer buyer2 = new Buyer(seller, "Buyer2");
+        Buyer buyer3 = new Buyer(seller, "Buyer3");
 
         manufacture.start();
         seller.start();
@@ -18,13 +18,13 @@ public class Main {
         buyer3.start();
 
         try {
-            manufacture.join();
+            seller.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        if (!manufacture.isAlive()) {
-            seller.interrupt();
+        if (!seller.isAlive()) {
+            manufacture.interrupt();
             buyer1.interrupt();
             buyer2.interrupt();
             buyer3.interrupt();
